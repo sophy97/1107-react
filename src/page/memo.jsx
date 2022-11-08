@@ -6,23 +6,28 @@ import { addmemo } from "../modules/memo";
 
 const MemoComp = () => {
     // 인풋박스 내부 데이터 관리
-    const memolist = useSelector((state)=>state.memo.memolist);
     const [name, setName] = useState('');
     const [text, setText] = useState('');
     const date = new Date();
 
-    // useDispatch()를 통해 추가한 새 리스트 생성 
-    // > memo.js 모듈생성
+    // useDispatch()를 통해, 값을 들고와 새 리스트 생성 > memo.js 모듈생성
+    // 값을 모든 컴포넌트에서 사용 (자주 바뀌지 않도록)
+    // 리듀서를 이용한 화면 데이터 제어 :: useSelector로 가져온 값은 dispatch일어나면 다시 가져옴
+    const memolist = useSelector((state)=>state.memo.memolist);
     const dispatch = useDispatch();
-    // useCallback 사용시, 입력값에 따라바뀔수 있도록
+    // addMemo함수 > dispatch 사용하기 
     const addMemo = useCallback(()=>{ 
-        dispatch(addmemo( {name:name, text:text} ) )
-    },[dispatch,name,text]);
+        dispatch (addmemo (
+            {
+            name:name,
+            text:text
+            }
+        )) },[dispatch,name,text]);
 
 
     return ( 
         <div>
-            <h1>방명록을 작성해주세요</h1>
+            <h1>방명록을 작성하세요</h1>
             
             <div className="guest-form">
             <button className="move-btn">
@@ -33,13 +38,14 @@ const MemoComp = () => {
             <input type="text" placeholder="이름" onChange={(e)=>{setName(e.target.value)}}/>
             <input type="text"  placeholder="내용을 작성하세요" onChange={(e)=>{setText(e.target.value)}}/>
             <button onClick={addMemo}>등록</button>
-            {   
-                // map: 배열에 있는 요소들 가져와 return
-                memolist.map((memo)=>(
+            {   //자바스크립트 내용이므로 반드시 중괄호 안에서 map사용해야
+                // map: 배열에 있는 요소들 가져와서 return
+                memolist.map((memo)=>
+                (
                     <div>
-                        <h5> {memo.name} : {memo.text} 　 | {date.getMonth()+1}월{date.getDate()}일</h5>
+                        <h5> {memo.name} : {memo.text} 　 | {date.getMonth()+1}/{date.getDate()}</h5>
                     </div>
-                ))
+                ) )
             }
                 <hr />
             </div>

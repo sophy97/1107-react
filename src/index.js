@@ -9,7 +9,7 @@ import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import {Provider} from 'react-redux';
 import { createStore } from 'redux';
 //store에 추가할 counter state,action
-//rootReducer를 통해 묶어서 한번에 사용 가능
+//rootReducer를 통해 modules의 js데이터를 한번에 사용 가능
 import rootReducer from './modules';
 //store생성
 const store = createStore(rootReducer);

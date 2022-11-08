@@ -8,10 +8,8 @@ function App() {
       <h3 className='alltitle'>React Router APP(1107)</h3>
       <br/>
       <Routes>
-        
         <Route path='/' element={<Home />} />
         <Route path='/memo' element={<MemoComp />} />
-
       </Routes>
       
     
